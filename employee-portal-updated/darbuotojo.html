@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Darbuotojo portalas</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="css/darbuotojo.css" />
+  <style>
+    .logout-btn {
+      margin-top: auto;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      color: #dc2626;
+      cursor: pointer;
+      font-size: 13px;
+      transition: .15s;
+    }
+    .logout-btn:hover { background: #fee2e2; }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div>
+          <h1>Darbuotojo portalas</h1>
+          <p>Savitarna</p>
+        </div>
+      </div>
+
+      <div class="nav" id="nav">
+        <button class="active" data-target="info">Profilis</button>
+        <button data-target="schedule">Grafikas</button>
+        <button data-target="payroll">Atlyginimas</button>
+        <button data-target="training">Mokymai</button>
+        <button data-target="feed">Pranešimai</button>
+        <button data-target="vacation">Atostogos</button>
+      </div>
+
+      <div class="sidecard">
+        <h3>Prisijungęs</h3>
+        <p id="sideUser" class="muted">—</p>
+        <div class="kv">
+          <div>
+            <div class="k">Statusas</div>
+            <div class="v" id="sideStatus">—</div>
+          </div>
+          <span class="tag">aktyvus</span>
+        </div>
+      </div>
+
+      <button class="logout-btn" id="logoutBtn">Atsijungti</button>
+    </aside>
+
+    <main class="main">
+      
+      <!-- PROFILIS -->
+      <section class="section active" id="info">
+        <div class="grid">
+          <div class="card">
+            <h2>Mano profilis</h2>
+            <p class="muted">Peržiūrėkite savo asmeninius duomenis.</p>
+            <div class="hr"></div>
+
+            <div class="row">
+              <div class="kv">
+                <div>
+                  <div class="k">Vardas Pavardė</div>
+                  <div class="v" id="p_name">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Tabelio nr.</div>
+                  <div class="v" id="p_badge">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:12px;">
+              <div class="kv">
+                <div>
+                  <div class="k">Pareigos</div>
+                  <div class="v" id="p_role">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Padalinys</div>
+                  <div class="v" id="p_dept">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Sukauptos atostogos</div>
+                  <div class="v" id="p_vac">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div class="kv">
+                <div>
+                  <div class="k">Darbo grafikas</div>
+                  <div class="v" id="p_shiftType">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Vadovas</div>
+                  <div class="v" id="p_manager">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Kontaktai</h2>
+            <div class="hr"></div>
+
+            <div class="kv">
+              <div>
+                <div class="k">Personalo skyrius</div>
+                <div class="v">hr@imone.lt</div>
+              </div>
+            </div>
+
+            <div class="kv">
+              <div>
+                <div class="k">IT pagalba</div>
+                <div class="v">it@imone.lt</div>
+              </div>
+            </div>
+
+            <div class="kv">
+              <div>
+                <div class="k">Paskutinis prisijungimas</div>
+                <div class="v" id="lastLogin">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GRAFIKAS -->
+      <section class="section" id="schedule">
+        <div class="grid">
+          <div class="card" style="grid-column: 1 / -1;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h2>Darbo grafikas</h2>
+                <p class="muted" id="periodBadge">Einamasis periodas</p>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button id="calPrev" style="background:none;border:1px solid #e2e8f0;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:16px;">‹</button>
+                <span id="calMonthLabel" style="font-weight:600;font-size:15px;min-width:140px;text-align:center;">—</span>
+                <button id="calNext" style="background:none;border:1px solid #e2e8f0;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:16px;">›</button>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <!-- Legend -->
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;"><span style="width:14px;height:14px;border-radius:4px;background:#0f766e;display:inline-block;"></span> Darbo diena</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;"><span style="width:14px;height:14px;border-radius:4px;background:#dc2626;display:inline-block;"></span> Viršvalandžiai</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;"><span style="width:14px;height:14px;border-radius:4px;background:#7c3aed;display:inline-block;"></span> Naktinė</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:12px;"><span style="width:14px;height:14px;border-radius:4px;background:#f1f5f9;border:1px solid #e2e8f0;display:inline-block;"></span> Laisva</span>
+            </div>
+
+            <!-- Calendar grid -->
+            <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;"></div>
+
+            <!-- Stats -->
+            <div class="result" style="margin-top:16px;">
+              <div class="stat">
+                <div class="t">Iš viso valandų</div>
+                <div class="n" id="schedTotal">—</div>
+              </div>
+              <div class="stat">
+                <div class="t">Darbo dienų</div>
+                <div class="n" id="schedDays">—</div>
+              </div>
+              <div class="stat">
+                <div class="t">Viršvalandžiai</div>
+                <div class="n" id="schedOt" style="color:#dc2626;">—</div>
+              </div>
+            </div>
+
+            <!-- Next shift banner -->
+            <div id="nextShiftBanner" style="margin-top:16px;padding:16px;background:linear-gradient(135deg,#0f766e,#0d9488);border-radius:12px;color:white;display:none;">
+              <div style="font-size:11px;opacity:.8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">Kita pamaina</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                <div>
+                  <div style="font-size:18px;font-weight:700;" id="nextDate">—</div>
+                  <div style="font-size:14px;opacity:.9;margin-top:2px;" id="nextTime">—</div>
+                </div>
+                <div style="text-align:right;">
+                  <div id="nextCountdown" style="font-size:13px;opacity:.85;"></div>
+                  <div id="nextNote" style="font-size:12px;opacity:.75;margin-top:2px;">—</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ATLYGINIMAS -->
+      <section class="section" id="payroll">
+        <div class="grid">
+          <div class="card">
+            <h2>Atlyginimo suvestinė</h2>
+            <p class="muted">Jūsų darbo užmokesčio informacija.</p>
+            <div class="hr"></div>
+
+            <div class="row3">
+              <div class="kv">
+                <div>
+                  <div class="k">Išdirbta valandų</div>
+                  <div class="v" id="pay_hours">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Valandinis įkainis</div>
+                  <div class="v" id="pay_rate">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Viršvalandžiai</div>
+                  <div class="v" id="pay_ot">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:12px;">
+              <div class="kv">
+                <div>
+                  <div class="k">Priedai</div>
+                  <div class="v" id="pay_bonus">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Išskaitos</div>
+                  <div class="v" id="pay_deduct">—</div>
+                </div>
+              </div>
+              <div class="kv">
+                <div>
+                  <div class="k">Pastaba</div>
+                  <div class="v" id="pay_note">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="result">
+              <div class="stat">
+                <div class="t">Bruto</div>
+                <div class="n" id="pay_bruto">—</div>
+                <div class="small" id="pay_bruto_breakdown">—</div>
+              </div>
+              <div class="stat">
+                <div class="t">Iš viso</div>
+                <div class="n" id="pay_total">—</div>
+                <div class="small">Periodas: <span id="pay_period">—</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Santrauka</h2>
+            <div class="hr"></div>
+            <div class="kv">
+              <div>
+                <div class="k">Darbuotojas</div>
+                <div class="v" id="pay_employee">—</div>
+              </div>
+            </div>
+            <div class="kv">
+              <div>
+                <div class="k">Atnaujinta</div>
+                <div class="v" id="pay_updated">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOKYMAI -->
+      <section class="section" id="training">
+        <div class="grid">
+          <div class="card">
+            <h2>Mokymai</h2>
+            <p class="muted">Mokymosi medžiaga ir instrukcijos.</p>
+            <div class="hr"></div>
+
+            <div class="kv">
+              <div>
+                <div class="k">Tema</div>
+                <div class="v" id="train_title">—</div>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="muted" style="font-size:12px; margin-bottom:8px;">Instrukcija</div>
+            <div style="line-height:1.6; color: var(--text);" id="train_text">—</div>
+
+            <div class="video" id="train_videoWrap" style="display:none;">
+              <iframe id="train_iframe" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Užduotys</h2>
+            <p class="muted">Pažymėkite atliktas užduotis.</p>
+            <div class="hr"></div>
+            <div id="train_tasks"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRANESIMAI -->
+      <section class="section" id="feed">
+        <div class="grid">
+          <div class="card">
+            <h2>Pranešimai</h2>
+            <p class="muted">Įmonės naujienos ir skelbimai.</p>
+            <div class="hr"></div>
+            <div class="feed" id="feedList"></div>
+          </div>
+
+          <div class="card">
+            <h2>Priminimai</h2>
+            <div class="hr"></div>
+            <div class="kv">
+              <div>
+                <div class="k">Atostogų prašymai</div>
+                <div class="v">Pateikti iki mėnesio 25 d.</div>
+              </div>
+            </div>
+            <div class="kv">
+              <div>
+                <div class="k">Darbo sauga</div>
+                <div class="v">Laikykitės saugos instrukcijų</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    
+      <!-- ATOSTOGOS -->
+      <section class="section" id="vacation">
+        <div class="grid vacation-grid">
+          <div class="card vacation-card">
+            <div class="vacation-header">
+              <div>
+                <h2>Atostogų prašymas</h2>
+                <p class="muted">Pateikite atostogų laikotarpį administracijos patvirtinimui.</p>
+              </div>
+              <div class="vacation-balance-box"><span class="vacation-badge">Likutis</span><strong id="vac_balance">—</strong></div>
+            </div>
+            <div class="hr"></div>
+
+            <div class="vacation-form">
+              <div class="row vacation-row">
+                <div class="field-group">
+                  <label for="vac_from">Nuo</label>
+                  <input type="date" id="vac_from" class="vac-input" />
+                </div>
+                <div class="field-group">
+                  <label for="vac_to">Iki</label>
+                  <input type="date" id="vac_to" class="vac-input" />
+                </div>
+              </div>
+
+              <div class="field-group vacation-comment-group">
+                <label for="vac_note">Komentaras</label>
+                <textarea id="vac_note" class="vac-textarea" placeholder="Pvz. planuojamos atostogos, šeimos kelionė..."></textarea>
+              </div>
+
+              <div class="vacation-actions">
+                <div class="vacation-note-box">
+                  <div class="vacation-note-title">Pastaba</div>
+                  <div class="vacation-note-text">Patvirtinus prašymą, atostogų likutis bus sumažintas dienomis automatiškai.</div>
+                </div>
+                <button class="btn vacation-submit" id="vac_submit">Siųsti prašymą</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Mano prašymai</h2>
+            <p class="muted">Čia matysite visus pateiktus atostogų prašymus ir jų būseną.</p>
+            <div class="hr"></div>
+            <div id="vac_list"><div class="muted">Kraunama...</div></div>
+          </div>
+        </div>
+      </section>
+
+</main>
+  </div>
+
+  <script src="js/darbuotojo.js"></script>
+</body>
+</html>

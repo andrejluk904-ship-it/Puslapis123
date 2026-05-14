@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prisijungimas - Darbuotojų portalas</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div>
+          <h1>Darbuotojų portalas</h1>
+          <p>Prisijungimas</p>
+        </div>
+      </div>
+
+      <div class="error-message" id="errorMsg"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Prisijungimo vardas</label>
+          <input type="text" id="username" name="username" placeholder="Įveskite vartotojo vardą" required autofocus />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Slaptažodis</label>
+          <input type="password" id="password" name="password" placeholder="Įveskite slaptažodį" required />
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          Prisijungti
+        </button>
+      </form>
+
+      <div style="text-align:center; margin-top:12px;">
+        <a href="#" id="forgotLink" style="font-size:13px; color:#2563eb; text-decoration:none;">Pamiršau slaptažodį</a>
+      </div>
+
+      <!-- Forgot password panel -->
+      <div id="forgotPanel" style="display:none; margin-top:16px; padding:16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px;">
+        <div style="font-weight:600; font-size:14px; margin-bottom:8px;">🔑 Slaptažodžio atstatymas</div>
+        <p style="font-size:13px; color:#64748b; margin-bottom:12px;">Įveskite savo Gmail adresą – atsiųsime nuorodą slaptažodžiui keisti.</p>
+        <div id="forgotMsg" style="display:none; padding:8px 12px; border-radius:8px; font-size:13px; margin-bottom:10px;"></div>
+        <input type="text" id="resetEmail" placeholder="vardas@gmail.com" style="width:100%; padding:10px 12px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; box-sizing:border-box; margin-bottom:10px;" autocomplete="email" />
+        <button id="sendResetBtn" style="width:100%; padding:10px; background:#2563eb; color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer;">Siųsti nuorodą</button>
+        <div style="text-align:center; margin-top:8px;">
+          <a href="#" id="backToLogin" style="font-size:12px; color:#94a3b8; text-decoration:none;">← Grįžti į prisijungimą</a>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="demo-info">
+        <p>Demo prisijungimo duomenys:</p>
+        <div class="demo-credentials">
+          <div class="demo-box">
+            <div class="role">Administratorius</div>
+            <div class="creds">
+              admin<br/>
+              admin123
+            </div>
+          </div>
+          <div class="demo-box">
+            <div class="role">Darbuotojas</div>
+            <div class="creds">
+              jonas<br/>
+              jonas123
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const loginBtn = document.getElementById('loginBtn');
+
+    // Check if already logged in
+    fetch('/api/me')
+      .then(res => res.json())
+      .then(user => {
+        if (user && !user.error) {
+          window.location.href = user.role === 'admin' ? '/portal.html' : '/darbuotojo.html';
+        }
+      })
+      .catch(() => {});
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        showError('Įveskite prisijungimo duomenis');
+        return;
+      }
+
+      loginBtn.disabled = true;
+      loginBtn.innerHTML = '<span class="loading"></span>Jungiamasi...';
+      errorMsg.classList.remove('show');
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          showError(data.error || 'Prisijungimo klaida');
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Prisijungti';
+        }
+      } catch (err) {
+        showError('Serverio klaida. Patikrinkite ar serveris veikia.');
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Prisijungti';
+      }
+    });
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('show');
+    }
+
+    // Forgot password
+    document.getElementById('forgotLink').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('forgotPanel').style.display = 'block';
+      document.getElementById('forgotLink').style.display = 'none';
+    });
+
+    document.getElementById('backToLogin').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('forgotPanel').style.display = 'none';
+      document.getElementById('forgotLink').style.display = 'inline';
+    });
+
+    document.getElementById('sendResetBtn').addEventListener('click', async () => {
+      let email = document.getElementById('resetEmail').value.trim();
+      // Remove mailto: formatting if present
+      email = email.replace(/^mailto:/i, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim();
+      const msgEl = document.getElementById('forgotMsg');
+      const btn = document.getElementById('sendResetBtn');
+
+      if (!email) { showForgotMsg('Įveskite el. pašto adresą', 'error'); return; }
+
+      btn.disabled = true; btn.textContent = 'Siunčiama...';
+      try {
+        const res = await fetch('/api/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showForgotMsg('✅ Nuoroda išsiųsta! Patikrinkite savo Gmail.', 'success');
+          btn.textContent = 'Išsiųsta';
+        } else {
+          showForgotMsg(data.error || 'Klaida siunčiant laišką', 'error');
+          btn.disabled = false; btn.textContent = 'Siųsti nuorodą';
+        }
+      } catch (err) {
+        showForgotMsg('Serverio klaida', 'error');
+        btn.disabled = false; btn.textContent = 'Siųsti nuorodą';
+      }
+    });
+
+    function showForgotMsg(msg, type) {
+      const el = document.getElementById('forgotMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.style.background = type === 'success' ? '#f0fdf4' : '#fef2f2';
+      el.style.border = `1px solid ${type === 'success' ? '#bbf7d0' : '#fecaca'}`;
+      el.style.color = type === 'success' ? '#166534' : '#dc2626';
+    }
+  </script>
+</body>
+</html>

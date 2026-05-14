@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "employeeId": 1,
+    "period": "2026-12 (gruodis)",
+    "hours": 44,
+    "rate": 8.5,
+    "overtimeHours": 6,
+    "overtimeCoef": 1.5,
+    "bonus": 50,
+    "deductions": 15,
+    "note": "Įskaičiuotas priedas už rezultatą",
+    "updatedAt": "2026-12-20T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "period": "2026-01",
+    "hours": 50,
+    "rate": 9,
+    "overtimeHours": 4,
+    "overtimeCoef": 1.5,
+    "bonus": 30,
+    "deductions": 0,
+    "note": "Kuro kompensacija",
+    "updatedAt": "2026-01-13T21:02:46.905Z"
+  }
+]

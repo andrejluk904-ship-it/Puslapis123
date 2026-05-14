@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "title": "Pirmoji diena: sauga + darbo tvarka",
+    "text": "<ol><li>Privaloma darbo apranga ir apsaugos priemonės (pirštinės, liemenė, avalynė).</li><li>Praėjimai ir evakuaciniai išėjimai turi būti neužstatyti.</li><li>Incidentus (sužalojimai, sugadinimai) pranešti vadovui iškart.</li><li>Krautuvą/įrangą naudoti tik turint leidimą/pažymėjimą.</li></ol>",
+    "videoUrl": "https://www.youtube.com/watch?v=henIVlCPVIY",
+    "tasks": [
+      {
+        "title": "Perskaityti saugos instrukciją",
+        "done": true
+      },
+      {
+        "title": "Susipažinti su sandėlio zonomis",
+        "done": true
+      },
+      {
+        "title": "Praeiti darbo vietos apmokymą",
+        "done": true
+      }
+    ],
+    "localVideoUrl": ""
+  },
+  {
+    "id": 2,
+    "title": "Darbo aplinkos suruošimas",
+    "text": "Some task to fully complet",
+    "videoUrl": "https://www.youtube.com/watch?v=t26iooY3PAo",
+    "localVideoUrl": "",
+    "tasks": [
+      {
+        "title": "Task1",
+        "done": false
+      },
+      {
+        "title": "Task2",
+        "done": false
+      }
+    ]
+  }
+]
