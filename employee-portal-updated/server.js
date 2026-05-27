@@ -11,7 +11,9 @@ const nodemailer = require('nodemailer');
 const GMAIL_USER = process.env.GMAIL_USER;
 const GMAIL_PASS = process.env.GMAIL_PASS;
 const SITE_URL = process.env.SITE_URL || 'https://puslapis123-production.up.railway.app';
-
+console.log('GMAIL_USER yra:', GMAIL_USER ? 'TAIP' : 'NE');
+console.log('GMAIL_PASS yra:', GMAIL_PASS ? 'TAIP' : 'NE');
+console.log('SITE_URL:', SITE_URL);
 const mailer = nodemailer.createTransport({
   service: 'gmail',
   auth: { user: GMAIL_USER, pass: GMAIL_PASS }
