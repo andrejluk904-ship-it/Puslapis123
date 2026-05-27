@@ -14,7 +14,6 @@ const SITE_URL = process.env.SITE_URL || 'https://puslapis123-production.up.rail
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 
-
 // In-memory token store: { token -> { userId, expires } }
 const resetTokens = new Map();
 
