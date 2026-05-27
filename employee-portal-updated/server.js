@@ -228,6 +228,7 @@ app.post('/api/forgot-password', async (req, res) => {
     message: 'Nepavyko išsiųsti laiško.'
   });
 }
+});
 
 // ── Reset password ───────────────────────────────────────────────────────────
 app.post('/api/reset-password', async (req, res) => {
