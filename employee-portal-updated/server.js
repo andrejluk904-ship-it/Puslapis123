@@ -5,30 +5,15 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 // ── Email config (set your Gmail credentials in .env or here) ───────────────
-const GMAIL_USER = process.env.GMAIL_USER;
-const GMAIL_PASS = process.env.GMAIL_PASS;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const SITE_URL = process.env.SITE_URL || 'https://puslapis123-production.up.railway.app';
-console.log('GMAIL_USER yra:', GMAIL_USER ? 'TAIP' : 'NE');
-console.log('GMAIL_PASS yra:', GMAIL_PASS ? 'TAIP' : 'NE');
-console.log('SITE_URL:', SITE_URL);
-const mailer = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: GMAIL_USER,
-    pass: GMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 15000
-});
+
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
+
+
 
 // In-memory token store: { token -> { userId, expires } }
 const resetTokens = new Map();
@@ -196,32 +181,53 @@ app.post('/api/forgot-password', async (req, res) => {
 
   const resetLink = `${SITE_URL}/reset-password?token=${token}`;
 
-  if (!GMAIL_USER || !GMAIL_PASS) {
-    // Dev mode – print link to console
-    console.log('\n🔑 RESET LINK (dev mode – no email configured):', resetLink, '\n');
-    return res.json({ success: true, devLink: resetLink });
+ if (!RESEND_API_KEY || !resend) {
+  console.log('\n🔑 RESET LINK (dev mode – no email configured):', resetLink, '\n');
+  return res.json({ success: true, devLink: resetLink });
   }
 
   try {
-    await mailer.sendMail({
-      from: `"Darbuotojų portalas" <${GMAIL_USER}>`,
-      to: email,
-      subject: 'Slaptažodžio atstatymas',
-      html: `
-        <div style="font-family:Arial,sans-serif;max-width:480px;margin:auto;padding:24px;border:1px solid #e2e8f0;border-radius:12px;">
-          <h2 style="color:#1e293b;margin-bottom:8px;">Slaptažodžio atstatymas</h2>
-          <p style="color:#64748b;">Gavome prašymą atstatyti jūsų slaptažodį. Spauskite žemiau esančią nuorodą:</p>
-          <a href="${resetLink}" style="display:inline-block;margin:16px 0;padding:12px 24px;background:#2563eb;color:white;border-radius:8px;text-decoration:none;font-weight:600;">Keisti slaptažodį</a>
-          <p style="color:#94a3b8;font-size:13px;">Nuoroda galioja 1 valandą. Jei neprašėte keisti slaptažodžio – ignoruokite šį laišką.</p>
-        </div>
-      `
+  const { data, error } = await resend.emails.send({
+    from: 'Darbuotojų portalas <onboarding@resend.dev>',
+    to: [user.email],
+    subject: 'Slaptažodžio atstatymas',
+    html: `
+      <h2>Slaptažodžio atstatymas</h2>
+      <p>Gavome prašymą atstatyti jūsų slaptažodį.</p>
+      <p>Paspauskite žemiau esančią nuorodą:</p>
+      <p>
+        <a href="${resetLink}" style="display:inline-block;padding:10px 16px;background:#0057ff;color:white;text-decoration:none;border-radius:6px;">
+          Atstatyti slaptažodį
+        </a>
+      </p>
+      <p>Arba nukopijuokite šią nuorodą į naršyklę:</p>
+      <p>${resetLink}</p>
+      <p>Jeigu šio veiksmo neatlikote, ignoruokite šį laišką.</p>
+    `
+  });
+
+  if (error) {
+    console.error('Resend klaida:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Nepavyko išsiųsti laiško.'
     });
-    res.json({ success: true });
-  } catch (err) {
-    console.error('Email error:', err.message);
-    res.status(500).json({ error: 'Nepavyko išsiųsti laiško. Patikrinkite Gmail konfigūraciją.' });
   }
-});
+
+  console.log('Laiškas išsiųstas per Resend:', data);
+
+  return res.json({
+    success: true,
+    message: 'Slaptažodžio atstatymo laiškas išsiųstas.'
+  });
+
+} catch (error) {
+  console.error('Email error:', error);
+  return res.status(500).json({
+    success: false,
+    message: 'Nepavyko išsiųsti laiško.'
+  });
+}
 
 // ── Reset password ───────────────────────────────────────────────────────────
 app.post('/api/reset-password', async (req, res) => {
