@@ -8,9 +8,9 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 // ── Email config (set your Gmail credentials in .env or here) ───────────────
-const GMAIL_USER = process.env.GMAIL_USER || 'andrius.lukosenkinas@gmail.com';  // jūsų@gmail.com
-const GMAIL_PASS = process.env.GMAIL_PASS || 'ggkwgatwfoufvpfa';  // Gmail App Password
-const SITE_URL   = process.env.SITE_URL   || 'http://localhost:3000';
+const GMAIL_USER = process.env.GMAIL_USER;
+const GMAIL_PASS = process.env.GMAIL_PASS;
+const SITE_URL = process.env.SITE_URL || 'https://puslapis123-production.up.railway.app';
 
 const mailer = nodemailer.createTransport({
   service: 'gmail',
