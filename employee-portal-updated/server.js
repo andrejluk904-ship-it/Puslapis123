@@ -15,8 +15,19 @@ console.log('GMAIL_USER yra:', GMAIL_USER ? 'TAIP' : 'NE');
 console.log('GMAIL_PASS yra:', GMAIL_PASS ? 'TAIP' : 'NE');
 console.log('SITE_URL:', SITE_URL);
 const mailer = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: GMAIL_USER, pass: GMAIL_PASS }
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: GMAIL_USER,
+    pass: GMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 15000,
+  greetingTimeout: 15000,
+  socketTimeout: 15000
 });
 
 // In-memory token store: { token -> { userId, expires } }
