@@ -125,6 +125,7 @@ function requireAdmin(req, res, next) {
 
 // Login
 app.post('/api/login', async (req, res) => {
+  
   const { username, password } = req.body;
   const users = readJSON(USERS_FILE);
 
@@ -165,6 +166,8 @@ app.get('/reset-password', (req, res) => {
 
 // ── Forgot password ──────────────────────────────────────────────────────────
 app.post('/api/forgot-password', async (req, res) => {
+  console.log('PAMIRŠAU SLAPTAŽODĮ ROUTE PASIEKTAS');
+  console.log('Gautas email:', req.body.email);
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Įveskite el. pašto adresą' });
 
