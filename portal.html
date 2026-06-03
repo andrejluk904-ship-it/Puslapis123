@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administravimo portalas</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="css/portal.css" />
+  <style>
+    .employee-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      margin-bottom: 10px;
+      transition: all .2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    }
+    .employee-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+    .employee-name { font-weight: 600; margin-bottom: 4px; color: var(--text); }
+    .employee-meta { font-size: 12px; color: var(--muted); }
+    .employee-actions { display: flex; gap: 8px; }
+    .employee-select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .shift {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+    .logout-btn {
+      margin-top: auto;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      color: #dc2626;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all .2s ease;
+    }
+    .logout-btn:hover {
+      background: #fee2e2;
+      box-shadow: 0 4px 12px rgba(220,38,38,.15);
+      transform: translateY(-1px);
+    }
+    /* Training & User list items */
+    .training-item, .user-item {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      margin-bottom: 10px;
+      transition: all .2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    }
+    .training-item:hover, .user-item:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo.png" alt="Logo" class="logo" />
+        <div>
+          <h1>Administravimo portalas</h1>
+          <p class="sub">Valdymas</p>
+        </div>
+      </div>
+
+      <div class="nav" id="nav">
+        <button class="active" data-target="info">Darbuotojai</button>
+        <button data-target="schedule">Grafikas</button>
+        <button data-target="payroll">Atlyginimas</button>
+        <button data-target="training">Mokymai</button>
+        <button data-target="feed">Pranešimai</button>
+        <button data-target="users">Vartotojai</button>
+        <button data-target="vacationAdmin">Atostogos</button>
+      </div>
+
+      <div class="sidecard">
+        <h3>Prisijungęs</h3>
+        <p class="muted">Administratorius</p>
+      </div>
+
+      <button class="logout-btn" id="logoutBtn">Atsijungti</button>
+    </aside>
+
+    <main class="main">
+      
+      <!-- 1) DARBUOTOJAI -->
+      <section class="section active" id="info">
+        <div class="grid">
+          <div class="card">
+            <h2>Darbuotojo forma</h2>
+            <p class="muted">Sukurkite arba redaguokite darbuotoją.</p>
+
+            <div class="hr"></div>
+
+            <div class="row">
+              <div>
+                <label>Vardas</label>
+                <input id="p_vardas" placeholder="Jonas" />
+              </div>
+              <div>
+                <label>Pavardė</label>
+                <input id="p_pavarde" placeholder="Jonaitis" />
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:12px;">
+              <div>
+                <label>Tabelio nr.</label>
+                <input id="p_tabelis" placeholder="1047" />
+              </div>
+              <div>
+                <label>Pareigos</label>
+                <input id="p_pareigos" placeholder="Sandėlio darbuotojas" />
+              </div>
+              <div>
+                <label>Padalinys</label>
+                <input id="p_padalinys" placeholder="Logistika" />
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:12px;">
+              <div>
+                <label>Atostogų likutis (dienomis)</label>
+                <input id="p_atostogos" type="number" step="0.5" placeholder="7" />
+              </div>
+              <div>
+                <label>Telefono nr.</label>
+                <input id="p_tel" placeholder="+370..." />
+              </div>
+              <div>
+                <label>El. paštas</label>
+                <input id="p_email" placeholder="vardas@imone.lt" />
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>Darbo sutartis</label>
+                <select id="p_sutartis">
+                  <option value="Neterminuota">Neterminuota</option>
+                  <option value="Terminuota">Terminuota</option>
+                  <option value="Praktika">Praktika</option>
+                </select>
+              </div>
+              <div>
+                <label>Darbo pradžia</label>
+                <input id="p_pradzia" type="date" />
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>Statusas</label>
+                <select id="p_statusas">
+                  <option>Aktyvus</option>
+                  <option>Atostogose</option>
+                  <option>Biuletenis</option>
+                  <option>Komandiruotė</option>
+                </select>
+              </div>
+              <div>
+                <label>Vadovas</label>
+                <input id="p_vadovas" placeholder="V. Vadovaitė" />
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>Darbo vieta</label>
+                <input id="p_vieta" placeholder="Vilnius" />
+              </div>
+              <div>
+                <label>Grafikas</label>
+                <select id="p_grafikas">
+                  <option>5/2</option>
+                  <option>4/4</option>
+                  <option>Slankus</option>
+                  <option>Naktinis</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>Pastabos</label>
+              <textarea id="p_pastabos" placeholder="Trumpos pastabos..."></textarea>
+            </div>
+
+            <div class="kv">
+              <div>
+                <div class="k">Santrauka</div>
+                <div class="v" id="profileSummary">—</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn secondary" id="newEmployee">Naujas</button>
+                <button class="btn" id="saveProfile">Sukurti</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Darbuotojų sąrašas</h2>
+            <p class="muted">Visi registruoti darbuotojai.</p>
+            <div class="hr"></div>
+            <div style="margin-bottom:12px;">
+              <input id="employeeSearch" placeholder="Ieškoti..." style="width:100%;" />
+            </div>
+            <div id="employeesList">
+              <div class="muted">Kraunama...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) DARBO GRAFIKAS -->
+      <section class="section" id="schedule">
+        <div class="grid">
+          <div class="card">
+            <h2>Darbo grafikas</h2>
+            <p class="muted">Pasirinkite darbuotoją ir importuokite grafiką.</p>
+
+            <div class="hr"></div>
+
+            <label>Pasirinkite darbuotoją</label>
+            <select id="scheduleEmployee" class="employee-select"></select>
+
+            <div class="schedule-builder">
+              <div class="row">
+                <div>
+                  <label>Pasirinkite mėnesį</label>
+                  <input id="scheduleMonth" type="month" />
+                </div>
+                <div>
+                  <label>Mėnesio norma</label>
+                  <input id="monthlyLimit" type="number" value="160" min="1" />
+                </div>
+              </div>
+              <div class="schedule-actions">
+                <button class="btn" id="buildScheduleBtn">Sukurti grafiką</button>
+                <button class="btn secondary" id="clearScheduleBtn">Išvalyti pasirinkimą</button>
+              </div>
+              <div class="schedule-legend">
+                <span><i class="legend-box work"></i> Darbo diena</span>
+                <span><i class="legend-box overtime"></i> Viršvalandžiai</span>
+                <span><i class="legend-box off"></i> Laisva</span>
+              </div>
+              <div id="monthSummary" class="month-summary">Pasirinkite darbuotoją ir mėnesį.</div>
+              <div id="monthCalendar" class="month-calendar"></div>
+              <div class="hint">Spauskite ant datos, kad pažymėtumėte darbo dieną. Darbo laikas parenkamas automatiškai: I–V 08:00–19:00, VI 09:00–19:00, VII 10:00–19:00. Viršijus 160 val., dienos žymimos kaip viršvalandžiai.</div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label>Importuoti CSV</label>
+                <input id="csvFile" type="file" accept=".csv,text/csv" />
+                <div class="hint">Galimi stulpeliai: Data, Diena, Pradžia, Pabaiga, Val., Pamaina, Pastabos. Valandos bus paskaičiuotos ir automatiškai, jei jų nėra.</div>
+              </div>
+              <div>
+                <label>Įkelti nuotrauką</label>
+                <input id="imgFile" type="file" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="preview" id="schedulePreview">
+              <div class="muted">Pasirinkite darbuotoją.</div>
+            </div>
+
+            <button class="btn btn-danger" id="deleteSchedule" style="display:none; margin-top:12px;">Ištrinti grafiką</button>
+          </div>
+
+          <div class="card">
+            <h2>CSV formatas</h2>
+            <ul class="muted" style="margin:10px 0 0; padding-left: 18px; line-height:1.6;">
+              <li>Stulpeliai: <b>Data, Diena, Pradžia, Pabaiga, Val., Pamaina, Pastabos</b></li>
+              <li>Išsaugoti kaip <b>CSV (UTF-8)</b></li>
+              <li>Skirtukas: <b>,</b> arba <b>;</b></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3) ALGOS SKAICIUOKLE -->
+      <section class="section" id="payroll">
+        <div class="grid">
+
+          <!-- AUTO SKAIČIAVIMAS -->
+          <div class="card" style="border-top:3px solid var(--brand);">
+            <h2>⚡ Automatinis skaičiavimas</h2>
+            <p class="muted">Valandos imamos tiesiai iš darbuotojo grafiko.</p>
+            <div class="hr"></div>
+
+            <label>Pasirinkite darbuotoją</label>
+            <select id="payrollEmployee" class="employee-select"></select>
+
+            <div style="margin-top:14px;">
+              <label>Pasirinkite mėnesį</label>
+              <input id="payrollMonth" type="month" />
+            </div>
+
+            <div style="margin-top:14px;">
+              <label>Valandinis įkainis (€/val.)</label>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;" id="rateButtons">
+                <button class="rate-btn active" data-rate="6.5"  style="padding:8px 18px;border-radius:8px;border:2px solid #0f766e;background:#f0fdf4;color:#0f766e;font-weight:600;cursor:pointer;transition:.15s;">€6.50</button>
+                <button class="rate-btn"        data-rate="8.5"  style="padding:8px 18px;border-radius:8px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-weight:600;cursor:pointer;transition:.15s;">€8.50</button>
+                <button class="rate-btn"        data-rate="12.5" style="padding:8px 18px;border-radius:8px;border:2px solid #e2e8f0;background:#f8fafc;color:#475569;font-weight:600;cursor:pointer;transition:.15s;">€12.50</button>
+              </div>
+              <input id="auto_rate" type="number" step="0.01" placeholder="arba įveskite kitą įkainį..." style="margin-top:8px;" />
+            </div>
+
+            <div class="row3" style="margin-top:14px;">
+              <div>
+                <label>Viršvalandžių koef.</label>
+                <select id="auto_otCoef">
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2.0x</option>
+                  <option value="1.25">1.25x</option>
+                </select>
+              </div>
+              <div>
+                <label>Priedai (€)</label>
+                <input id="auto_bonus" type="number" step="0.01" placeholder="0" />
+              </div>
+              <div>
+                <label>Išskaitos (€)</label>
+                <input id="auto_deduct" type="number" step="0.01" placeholder="0" />
+              </div>
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>Pastaba</label>
+              <input id="auto_note" placeholder="Pastaba darbuotojui..." />
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+              <button class="btn" id="autoCalcFromSchedule">⚡ Skaičiuoti iš grafiko</button>
+              <button class="btn" id="savePayroll">Išsaugoti</button>
+              <button class="btn secondary" id="resetAutoCalc">Išvalyti</button>
+            </div>
+
+            <div id="autoCalcInfo" style="display:none;margin-top:10px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:12px;color:#166534;"></div>
+
+            <div class="result" id="autoCalcResult" style="display:none;">
+              <div class="stat">
+                <div class="t">Bruto (€)</div>
+                <div class="n" id="auto_bruto">—</div>
+                <div class="small" id="auto_bruto_breakdown"></div>
+              </div>
+              <div class="stat">
+                <div class="t">Iš viso (€)</div>
+                <div class="n" id="auto_total">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RANKINIS SKAIČIAVIMAS -->
+          <div class="card" style="border-top:3px solid var(--brand);">
+            <h2>✏️ Rankinis skaičiavimas</h2>
+            <p class="muted">Įveskite valandas ir įkainį rankiniu būdu.</p>
+            <div class="hr"></div>
+
+            <label>Pasirinkite darbuotoją</label>
+            <select id="payrollEmployeeManual" class="employee-select"></select>
+
+            <div style="margin-top:14px;">
+              <label>Pasirinkite mėnesį</label>
+              <input id="payrollMonthManual" type="month" />
+            </div>
+
+            <div class="row3" style="margin-top:14px;">
+              <div>
+                <label>Išdirbtos valandos</label>
+                <input id="h_hours" type="number" step="0.25" placeholder="168" />
+              </div>
+              <div>
+                <label>Valandinis įkainis (€)</label>
+                <input id="h_rate" type="number" step="0.01" placeholder="8.50" />
+              </div>
+              <div>
+                <label>Viršvalandžiai (val.)</label>
+                <input id="h_otHours" type="number" step="0.25" placeholder="0" />
+              </div>
+            </div>
+
+            <div class="row3" style="margin-top:12px;">
+              <div>
+                <label>Viršvalandžių koef.</label>
+                <select id="h_otCoef">
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2.0x</option>
+                  <option value="1.25">1.25x</option>
+                </select>
+              </div>
+              <div>
+                <label>Priedai (€)</label>
+                <input id="h_bonus" type="number" step="0.01" placeholder="50" />
+              </div>
+              <div>
+                <label>Išskaitos (€)</label>
+                <input id="h_deduct" type="number" step="0.01" placeholder="0" />
+              </div>
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>Pastaba</label>
+              <input id="h_note" placeholder="Naktinės valandos, premija..." />
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+              <button class="btn" id="calcPay">Skaičiuoti</button>
+              <button class="btn" id="savePayrollManual">Išsaugoti</button>
+              <button class="btn secondary" id="resetPay">Išvalyti</button>
+            </div>
+
+            <div class="result">
+              <div class="stat">
+                <div class="t">Bruto (€)</div>
+                <div class="n" id="pay_bruto">—</div>
+              </div>
+              <div class="stat">
+                <div class="t">Iš viso su priedais (€)</div>
+                <div class="n" id="pay_total">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Susiejimas -->
+          <div class="card">
+            <h2>Susiejimas</h2>
+            <div class="hr"></div>
+            <div class="kv">
+              <div>
+                <div class="k">Darbuotojas</div>
+                <div class="v" id="pay_employee">—</div>
+              </div>
+            </div>
+            <div class="kv">
+              <div>
+                <div class="k">Paskutinis skaičiavimas</div>
+                <div class="v" id="pay_last">—</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4) MOKYMAI -->
+      <section class="section" id="training">
+        <div class="grid">
+          <div class="card">
+            <h2><span id="trainingFormTitle">Pridėti mokymą</span></h2>
+            <p class="muted">Sukurkite naują mokymą darbuotojams.</p>
+
+            <div class="hr"></div>
+
+            <input type="hidden" id="t_editId" value="" />
+
+            <div>
+              <label>Pavadinimas</label>
+              <input id="t_title" placeholder="Pirmoji diena: sauga" />
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>Instrukcijos tekstas</label>
+              <textarea id="t_text" placeholder="Mokymų tekstas..."></textarea>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>YouTube nuoroda</label>
+                <input id="t_videoUrl" placeholder="https://www.youtube.com/watch?v=..." />
+              </div>
+              <div>
+                <label>Arba įkelti video failą</label>
+                <input id="t_videoFile" type="file" accept="video/*" />
+              </div>
+            </div>
+
+            <div id="videoPreview" style="margin-top:12px; display:none;">
+              <label>Video peržiūra</label>
+              <div id="videoPreviewContainer" style="margin-top:8px;"></div>
+            </div>
+
+            <div class="hr" style="margin-top:16px;"></div>
+
+            <div style="margin-top:12px;">
+              <label>Užduotys</label>
+              <div id="tasksList" style="margin:8px 0;"></div>
+              <div style="display:flex; gap:8px;">
+                <input id="newTaskInput" placeholder="Naujos užduoties tekstas..." style="flex:1;" />
+                <button class="btn secondary" id="addTaskBtn" type="button">Pridėti</button>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:16px;">
+              <button class="btn" id="saveTraining">Išsaugoti</button>
+              <button class="btn secondary" id="clearTrainingForm">Išvalyti</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Mokymų sąrašas</h2>
+            <div class="hr"></div>
+            <div id="trainingList">
+              <div class="muted">Kraunama...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5) PRANESIMAI -->
+      <section class="section" id="feed">
+        <div class="grid">
+          <div class="card">
+            <h2>Pranešimai darbuotojams</h2>
+            <p class="muted">Skelbkite pranešimus visiems darbuotojams.</p>
+
+            <div class="hr"></div>
+
+            <div class="row">
+              <div>
+                <label>Kas skelbia</label>
+                <select id="f_author">
+                  <option>Vadovybė</option>
+                  <option>HR</option>
+                  <option>Administracija</option>
+                  <option>IT</option>
+                </select>
+              </div>
+              <div>
+                <label>Žymė</label>
+                <input id="f_tag" placeholder="Svarbu" />
+              </div>
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>Pranešimo tekstas</label>
+              <textarea id="f_text" placeholder="Pranešimo tekstas..."></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:12px;">
+              <button class="btn" id="postMsg">Skelbti</button>
+              <button class="btn secondary" id="clearFeed">Išvalyti sieną</button>
+            </div>
+
+            <div class="feed" id="feedList"></div>
+          </div>
+
+          <div class="card">
+            <h2>Informacija</h2>
+            <p class="muted">
+              Pranešimai matomi visiems prisijungusiems darbuotojams.
+            </p>
+            <div class="hr"></div>
+            <div class="kv">
+              <div>
+                <div class="k">Saugojimas</div>
+                <div class="v">JSON failas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6) VARTOTOJAI -->
+      <section class="section" id="users">
+        <div class="grid">
+          <div class="card">
+            <h2><span id="userFormTitle">Sukurti vartotoją</span></h2>
+            <p class="muted">Prisijungimo duomenys portalui.</p>
+
+            <div class="hr"></div>
+
+            <input type="hidden" id="u_editId" value="" />
+
+            <div class="row">
+              <div>
+                <label>Vartotojo vardas</label>
+                <input id="u_username" placeholder="jonas" />
+              </div>
+              <div>
+                <label>Slaptažodis</label>
+                <input id="u_password" type="password" placeholder="Naujas slaptažodis" />
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:12px;">
+              <div>
+                <label>Rolė</label>
+                <select id="u_role">
+                  <option value="employee">Darbuotojas</option>
+                  <option value="admin">Administratorius</option>
+                </select>
+              </div>
+              <div>
+                <label>Susieti su darbuotoju</label>
+                <select id="u_employeeId" class="employee-select">
+                  <option value="">-- Nesusieta --</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top:12px;">
+              <label>El. paštas (slaptažodžio atstatymui) <span style="color:#94a3b8;font-size:11px;">– darbuotojas naudos šį adresą</span></label>
+              <input id="u_email" type="email" placeholder="darbuotojas@email.com" />
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:16px;">
+              <button class="btn" id="saveUser">Išsaugoti</button>
+              <button class="btn secondary" id="clearUserForm">Išvalyti</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Vartotojų sąrašas</h2>
+            <div class="hr"></div>
+            <div id="usersList">
+              <div class="muted">Kraunama...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- 7) ATOSTOGŲ PRAŠYMAI -->
+      <section class="section" id="vacationAdmin">
+        <div class="grid">
+          <div class="card vacation-admin-card">
+            <div class="vacation-admin-header">
+              <div>
+                <h2>Atostogų prašymai</h2>
+                <p class="muted">Peržiūrėkite, patvirtinkite arba atmeskite darbuotojų prašymus.</p>
+              </div>
+              <div class="vacation-admin-badge">Administratoriaus peržiūra</div>
+            </div>
+            <div class="hr"></div>
+            <div id="vac_admin_list"><div class="muted">Kraunama...</div></div>
+          </div>
+
+          <div class="card vacation-admin-card">
+            <div class="vacation-admin-header">
+              <div>
+                <h2>Atostogų likučio redagavimas</h2>
+                <p class="muted">Pasirinkite darbuotoją ir atnaujinkite likutį dienomis.</p>
+              </div>
+              <div class="vacation-admin-badge">Rankinis koregavimas</div>
+            </div>
+            <div class="hr"></div>
+            <label>Darbuotojas</label>
+            <select id="vacationBalanceEmployee" class="employee-select"></select>
+            <label>Atostogų likutis (dienomis)</label>
+            <input id="vacationBalanceInput" type="number" step="0.5" placeholder="7" />
+            <div class="hint" style="margin-top:10px;">Šis laukas leidžia greitai pakoreguoti likutį, pvz. po rankinio perskaičiavimo.</div>
+            <button class="btn" id="saveVacationBalance" style="margin-top:14px;">Išsaugoti likutį</button>
+          </div>
+        </div>
+      </section>
+
+</main>
+  </div>
+
+  <script src="js/portal.js"></script>
+</body>
+</html>

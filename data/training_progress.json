@@ -1,0 +1,12 @@
+[
+  {
+    "employeeId": 1,
+    "tasks": {
+      "1_0": true,
+      "1_1": true,
+      "1_2": true,
+      "2_0": true,
+      "2_1": true
+    }
+  }
+]

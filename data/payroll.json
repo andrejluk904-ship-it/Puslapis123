@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "employeeId": 1,
+    "period": "2026-05",
+    "hours": 208,
+    "rate": 8.5,
+    "overtimeHours": 0,
+    "overtimeCoef": 1.5,
+    "bonus": 0,
+    "deductions": 0,
+    "note": "",
+    "updatedAt": "2026-05-26T20:13:46.191Z"
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "period": "2026-01",
+    "hours": 50,
+    "rate": 9,
+    "overtimeHours": 4,
+    "overtimeCoef": 1.5,
+    "bonus": 30,
+    "deductions": 0,
+    "note": "Kuro kompensacija",
+    "updatedAt": "2026-01-13T21:02:46.905Z"
+  }
+]

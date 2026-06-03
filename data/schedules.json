@@ -1,0 +1,344 @@
+[
+  {
+    "id": 2,
+    "employeeId": 2,
+    "period": "2026-12",
+    "entries": [
+      {
+        "date": "2026-12-22",
+        "day": "An",
+        "start": "07:00",
+        "end": "16:00",
+        "hours": 8,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-12-23",
+        "day": "Tr",
+        "start": "07:00",
+        "end": "16:00",
+        "hours": 8,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-12-24",
+        "day": "Kt",
+        "start": "07:00",
+        "end": "12:00",
+        "hours": 4,
+        "shift": "D",
+        "note": "Trumpesnė diena"
+      },
+      {
+        "date": "2026-12-25",
+        "day": "Pt",
+        "start": "—",
+        "end": "—",
+        "hours": 0,
+        "shift": "L",
+        "note": "Šventinė diena"
+      },
+      {
+        "date": "2026-12-26",
+        "day": "Še",
+        "start": "07:00",
+        "end": "16:00",
+        "hours": 8,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-12-27",
+        "day": "Sk",
+        "start": "—",
+        "end": "—",
+        "hours": 0,
+        "shift": "L",
+        "note": "Laisva"
+      },
+      {
+        "date": "2026-12-28",
+        "day": "Pn",
+        "start": "—",
+        "end": "—",
+        "hours": 0,
+        "shift": "L",
+        "note": "Laisva"
+      },
+      {
+        "date": "2026-12-29",
+        "day": "An",
+        "start": "07:00",
+        "end": "16:00",
+        "hours": 8,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-12-30",
+        "day": "Tr",
+        "start": "07:00",
+        "end": "16:00",
+        "hours": 8,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-12-31",
+        "day": "Kt",
+        "start": "07:00",
+        "end": "14:00",
+        "hours": 6,
+        "shift": "D",
+        "note": "Naujametis"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "employeeId": 1,
+    "period": "2026-05",
+    "entries": [
+      {
+        "date": "2026-05-01",
+        "day": "pn",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-02",
+        "day": "št",
+        "start": "09:00",
+        "end": "19:00",
+        "hours": 10,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-03",
+        "day": "sk",
+        "start": "10:00",
+        "end": "19:00",
+        "hours": 9,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-06",
+        "day": "tr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-07",
+        "day": "kt",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-08",
+        "day": "pn",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-09",
+        "day": "št",
+        "start": "09:00",
+        "end": "19:00",
+        "hours": 10,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-10",
+        "day": "sk",
+        "start": "10:00",
+        "end": "19:00",
+        "hours": 9,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-13",
+        "day": "tr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-14",
+        "day": "kt",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-15",
+        "day": "pn",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-16",
+        "day": "št",
+        "start": "09:00",
+        "end": "19:00",
+        "hours": 10,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-17",
+        "day": "sk",
+        "start": "10:00",
+        "end": "19:00",
+        "hours": 9,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-20",
+        "day": "tr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-21",
+        "day": "kt",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-05-22",
+        "day": "pn",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "V",
+        "note": "Viršvalandžiai"
+      },
+      {
+        "date": "2026-05-23",
+        "day": "št",
+        "start": "09:00",
+        "end": "19:00",
+        "hours": 10,
+        "shift": "V",
+        "note": "Viršvalandžiai"
+      },
+      {
+        "date": "2026-05-24",
+        "day": "sk",
+        "start": "10:00",
+        "end": "19:00",
+        "hours": 9,
+        "shift": "V",
+        "note": "Viršvalandžiai"
+      },
+      {
+        "date": "2026-05-27",
+        "day": "tr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "V",
+        "note": "Viršvalandžiai"
+      },
+      {
+        "date": "2026-05-28",
+        "day": "kt",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "V",
+        "note": "Viršvalandžiai"
+      }
+    ],
+    "imageUrl": null,
+    "csvUpdatedAt": "2026-05-26T20:13:29.854Z",
+    "imageUpdatedAt": null
+  },
+  {
+    "id": 4,
+    "employeeId": 1,
+    "period": "2026-06",
+    "entries": [
+      {
+        "date": "2026-06-01",
+        "day": "pr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-06-08",
+        "day": "pr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-06-09",
+        "day": "an",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-06-10",
+        "day": "tr",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      },
+      {
+        "date": "2026-06-11",
+        "day": "kt",
+        "start": "08:00",
+        "end": "19:00",
+        "hours": 11,
+        "shift": "D",
+        "note": ""
+      }
+    ],
+    "imageUrl": null,
+    "csvUpdatedAt": "2026-06-03T07:29:51.416Z",
+    "imageUpdatedAt": null
+  }
+]

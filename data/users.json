@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "$2a$10$Pi0O8e3VkEkxn2JroJgTd.r703gyImOpjWe3OM5OXpj1vtMFjAvT2",
+    "role": "admin",
+    "employeeId": null
+  },
+  {
+    "id": 2,
+    "username": "jonas",
+    "password": "$2a$10$ecSyQYcO3Ws0p2YISbmGmuGuuBlo0Q7S0Rr4yJhRul8g8gEugWenq",
+    "role": "employee",
+    "employeeId": 1,
+    "email": "andrius.lukosenkinas@gmail.com"
+  }
+]
